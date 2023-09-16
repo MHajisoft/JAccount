@@ -21,7 +21,7 @@ public class IdentityTokenClaimService : ITokenClaimsService
     public async Task<string> GetTokenAsync(string userName)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(AuthorizationConstants.JWT_SECRET_KEY);
+        var key = Encoding.ASCII.GetBytes(AccountConstant.JwtSecretKey);
         var user = await _userManager.FindByNameAsync(userName);
         var roles = await _userManager.GetRolesAsync(user);
         var claims = new List<Claim> { new Claim(ClaimTypes.Name, userName) };
@@ -42,7 +42,7 @@ public class IdentityTokenClaimService : ITokenClaimsService
             return "";
 
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(AuthorizationConstants.JWT_SECRET_KEY);
+        var key = Encoding.ASCII.GetBytes(AccountConstant.JwtSecretKey);
         try
         {
             tokenHandler.ValidateToken(token, new TokenValidationParameters

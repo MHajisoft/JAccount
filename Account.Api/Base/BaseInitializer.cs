@@ -57,7 +57,7 @@ public abstract class BaseInitializer
 
         #region JWT
 
-        var key = Encoding.ASCII.GetBytes(AuthorizationConstants.JWT_SECRET_KEY);
+        var key = Encoding.ASCII.GetBytes(AccountConstant.JwtSecretKey);
         builder.Services.AddAuthentication(config =>
             {
                 config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -75,7 +75,7 @@ public abstract class BaseInitializer
 
         builder.Services.AddCors(options =>
         {
-            options.AddPolicy(name: CoreConstant.CorsPolicy,
+            options.AddPolicy(name: AccountConstant.CorsPolicy,
                 corsPolicyBuilder =>
                 {
                     corsPolicyBuilder.AllowAnyOrigin();
@@ -109,13 +109,11 @@ public abstract class BaseInitializer
 
         #region Swagger
 
-        var subSystem = ConfigurationUtil.GetAppSetting<string>(FrameworkConstant.Config.AppSetting.SubSystem);
-
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = $"{subSystem} API", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = $"JameJafari API", Version = "v1" });
             c.EnableAnnotations();
             c.SchemaFilter<CustomSchemaFilters>();
             c.SchemaFilter<EnumSchemaFilter>();
@@ -154,7 +152,7 @@ public abstract class BaseInitializer
 
         app.UseRouting();
 
-        app.UseCors(CoreConstant.CorsPolicy);
+        app.UseCors(AccountConstant.CorsPolicy);
 
         app.UseAuthentication();
         app.UseAuthorization();
