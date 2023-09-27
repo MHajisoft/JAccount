@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Account.Common.Entity;
 
 public class GeneralType : BaseEntity
@@ -9,4 +11,8 @@ public class GeneralType : BaseEntity
     public int OrderIndex { get; set; }
 
     public bool IsActive { get; set; }
+
+    public ICollection<Transaction> TransactionAccountTypes { get; set; }
+
+    public ICollection<Transaction> TransactionCostTypes { get; set; }
 }

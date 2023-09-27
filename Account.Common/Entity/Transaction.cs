@@ -21,5 +21,5 @@ public class Transaction : BaseEntity
 
     public long? BudgetCost => BudgetType == BudgetType.Cost ? Budget : null;
 
-    public byte[]? Document { get; set; }
+    public ICollection<Attachment> Attachments { get; set; }
 }
