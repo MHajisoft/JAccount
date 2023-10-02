@@ -27,5 +27,5 @@ public class Person : BaseEntity
 
     public byte[]? Thumbnail { get; set; }
 
-    public ICollection<Transaction> Transactions { get; set; }
+    public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
 }

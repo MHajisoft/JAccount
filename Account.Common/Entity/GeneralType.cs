@@ -12,7 +12,7 @@ public class GeneralType : BaseEntity
 
     public bool IsActive { get; set; }
 
-    public ICollection<Transaction> TransactionAccountTypes { get; set; }
+    public ICollection<Transaction> TransactionAccountTypes { get; set; } = new List<Transaction>();
 
-    public ICollection<Transaction> TransactionCostTypes { get; set; }
+    public ICollection<Transaction> TransactionCostTypes { get; set; } = new List<Transaction>();
 }

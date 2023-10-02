@@ -6,6 +6,6 @@ public class Attachment : BaseEntity
 
     public string Name { get; set; }
     
-    public Transaction Transaction { get; set; }
+    public Transaction? Transaction { get; set; }
     public long TransactionId { get; set; }
 }
