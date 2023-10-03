@@ -1,27 +1,23 @@
-﻿using Account.Common.Entity;
-using Account.Common.IService;
+﻿using Account.Common.IService;
 using Account.Service.InfraStructure;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Account.Service.Base;
 
-public abstract class ServiceBase<TEntity> : IServiceBase
-    where TEntity : BaseEntity, new()
+public abstract class ServiceBase : IServiceBase
 {
     #region Constructor
 
     protected readonly IServiceProvider AppServiceProvider;
-    protected IRepository<TEntity> Repository;
-    protected readonly AppDbContext _dbContext;
+    protected readonly AppDbContext DbContext;
     protected readonly IMapper AppMapper;
 
-    public ServiceBase(IServiceProvider appServiceProvider)
+    protected ServiceBase(IServiceProvider appServiceProvider)
     {
         AppServiceProvider = appServiceProvider;
-        Repository = AppServiceProvider.GetRequiredService<IRepository<TEntity>>();
         AppMapper = AppServiceProvider.GetRequiredService<IMapper>();
-        _dbContext = AppServiceProvider.GetRequiredService<AppDbContext>();
+        DbContext = AppServiceProvider.GetRequiredService<AppDbContext>();
     }
 
     #endregion
@@ -32,11 +28,11 @@ public abstract class ServiceBase<TEntity> : IServiceBase
     {
         try
         {
-            await _dbContext.Database.BeginTransactionAsync();
+            await DbContext.Database.BeginTransactionAsync();
 
             var entity = await command.Invoke();
 
-            await _dbContext.Database.CommitTransactionAsync();
+            await DbContext.Database.CommitTransactionAsync();
 
             return entity;
         }
@@ -44,7 +40,7 @@ public abstract class ServiceBase<TEntity> : IServiceBase
         {
             try
             {
-                await _dbContext.Database.RollbackTransactionAsync();
+                await DbContext.Database.RollbackTransactionAsync();
             }
             catch (Exception rollbackEx)
             {
