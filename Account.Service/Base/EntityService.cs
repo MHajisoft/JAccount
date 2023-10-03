@@ -1,4 +1,5 @@
-﻿using Account.Common.Entity;
+﻿using System.Linq.Expressions;
+using Account.Common.Entity;
 using Account.Common.IService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,12 +17,17 @@ public abstract class EntityService<TEntity> : ServiceBase, IEntityService<TEnti
         DbSet = DbContext.Set<TEntity>();
     }
 
-    public async Task<TEntity?> Get(long id)
+    public virtual async Task<TEntity?> Get(long id)
     {
         return await Repository.Load(id);
     }
 
-    public async Task<TEntity> Update(TEntity entity)
+    public virtual async Task<List<TEntity>> Search(Expression<Func<TEntity, bool>>? expression)
+    {
+        return await Repository.Search(expression);
+    }
+    
+    public virtual async Task<TEntity> Update(TEntity entity)
     {
         return await Repository.Update(entity);
     }
@@ -31,7 +37,7 @@ public abstract class EntityService<TEntity> : ServiceBase, IEntityService<TEnti
         throw new NotImplementedException();
     }
 
-    public async Task Delete(long id)
+    public virtual async Task Delete(long id)
     {
         await Repository.Delete(id);
     }

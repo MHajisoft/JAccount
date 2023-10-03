@@ -7,6 +7,7 @@ using Account.Common.Entity;
 using Account.Common.IService;
 using Account.Common.Util;
 using Account.Service.InfraStructure;
+using Account.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +47,11 @@ public abstract class BaseInitializer
         
         /*builder.Services.AddScoped<ICustomConverter, CustomConverter>();
         builder.Services.AddScoped(typeof(ITransManager), typeof(TransManagerEf<T>));*/
+        builder.Services.AddScoped<IGeneralTypeService, GeneralTypeService>();
+        builder.Services.AddScoped<IPersonService, PersonService>();
+        builder.Services.AddScoped<IAttachmentService, AttachmentService>();
+        builder.Services.AddScoped<ITransactionService, TransactionService>();
+        builder.Services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
 
         #endregion
 
