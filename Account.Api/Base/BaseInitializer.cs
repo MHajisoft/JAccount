@@ -44,7 +44,7 @@ public abstract class BaseInitializer
         #region Add services to the container
 
         builder.Services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
-        
+
         /*builder.Services.AddScoped<ICustomConverter, CustomConverter>();
         builder.Services.AddScoped(typeof(ITransManager), typeof(TransManagerEf<T>));*/
         builder.Services.AddScoped<IGeneralTypeService, GeneralTypeService>();
@@ -64,10 +64,7 @@ public abstract class BaseInitializer
         #region JWT
 
         var key = Encoding.ASCII.GetBytes(AccountConstant.JwtSecretKey);
-        builder.Services.AddAuthentication(config =>
-            {
-                config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+        builder.Services.AddAuthentication(config => { config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; })
             .AddJwtBearer(config =>
             {
                 config.RequireHttpsMetadata = false;
@@ -99,14 +96,8 @@ public abstract class BaseInitializer
         builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
         builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-        builder.Services.AddControllers(x =>
-            {
-                x.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
-            })
-            .AddJsonOptions(x =>
-            {
-                x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-            });
+        builder.Services.AddControllers(x => { x.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())); })
+            .AddJsonOptions(x => { x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull; });
 
         builder.Services.Configure<JsonOptions>(o => o.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
         builder.Services.Configure<Microsoft.AspNetCore.Mvc.JsonOptions>(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
@@ -199,6 +190,28 @@ public abstract class BaseInitializer
         {
             var dbContext = scopedProvider.GetRequiredService<T>();
             await dbContext.Database.MigrateAsync();
+
+            var userManager = scopedProvider.GetRequiredService<UserManager<AppUser>>();
+            var roleManager = scopedProvider.GetRequiredService<RoleManager<AppRole>>();
+
+            var list = await roleManager.Roles.ToListAsync();
+            if (!list.Any())
+            {
+                var adminRole = new AppRole { Name = "Admin", Title = "مدیر" };
+                var userRole = new AppRole { Name = "User", Title = "کاربر" };
+                await roleManager.CreateAsync(adminRole);
+                await roleManager.CreateAsync(userRole);
+
+                var adminUser = new AppUser { UserName = "Admin", DisplayName = "مدیر سامانه" };
+                await userManager.CreateAsync(adminUser);
+
+                await userManager.AddToRoleAsync(adminUser, "Admin");
+                await userManager.AddToRoleAsync(adminUser, "User");
+
+                await userManager.AddPasswordAsync(adminUser, "1qaz!QAZ");
+                
+                await dbContext.SaveChangesAsync();
+            }
         }
         catch (Exception ex)
         {
