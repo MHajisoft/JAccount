@@ -15,6 +15,12 @@ public abstract class GeneralTypeController : EntityController<GeneralType>
     }
 
     [HttpGet]
+    public override async Task<List<GeneralType>> GetAll()
+    {
+        return await Service.Search(x => x.Category == Category);
+    }
+
+    [HttpGet]
     public override async Task<GeneralType?> Load(long id)
     {
         return (await Service.Search(x => x.Id == id && x.Category == Category)).SingleOrDefault();

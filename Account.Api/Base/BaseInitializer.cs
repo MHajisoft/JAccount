@@ -209,7 +209,41 @@ public abstract class BaseInitializer
                 await userManager.AddToRoleAsync(adminUser, "User");
 
                 await userManager.AddPasswordAsync(adminUser, "1qaz!QAZ");
-                
+
+                var accountTypeList = new List<GeneralType>
+                {
+                    new() { Category = AccountConstant.AccountType, Title = "نقدی", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.AccountType, Title = "حواله بانکی", IsActive = true, OrderIndex = 2, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.AccountType, Title = "کارت به کارت", IsActive = true, OrderIndex = 3, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.AccountType, Title = "دستگاه پوز", IsActive = true, OrderIndex = 4, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.AccountType, Title = "چک", IsActive = true, OrderIndex = 5, CreateUserId = 1, CreateDate = DateTime.Now },
+                };
+
+                var costTypeList = new List<GeneralType>
+                {
+                    new() { Category = AccountConstant.CostType, Title = "عمومی", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.CostType, Title = "پذیرایی", IsActive = true, OrderIndex = 2, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.CostType, Title = "محرم و صفر", IsActive = true, OrderIndex = 3, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.CostType, Title = "اعیاد", IsActive = true, OrderIndex = 4, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.CostType, Title = "نیمه شعبان", IsActive = true, OrderIndex = 5, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.CostType, Title = "فاطمیه", IsActive = true, OrderIndex = 6, CreateUserId = 1, CreateDate = DateTime.Now },
+                };
+
+                var relativeTypeList = new List<GeneralType>
+                {
+                    new() { Category = AccountConstant.RelativeType, Title = "پدر", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.RelativeType, Title = "مادر", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.RelativeType, Title = "فرزند", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.RelativeType, Title = "برادر", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.RelativeType, Title = "خواهر", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.RelativeType, Title = "داماد", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.RelativeType, Title = "عروس", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
+                };
+
+                await dbContext.GeneralTypes.AddRangeAsync(accountTypeList);
+                await dbContext.GeneralTypes.AddRangeAsync(costTypeList);
+                await dbContext.GeneralTypes.AddRangeAsync(relativeTypeList);
+
                 await dbContext.SaveChangesAsync();
             }
         }

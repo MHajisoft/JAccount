@@ -5,7 +5,7 @@ namespace Account.Api.Controllers;
 
 public class CostTypeController : GeneralTypeController
 {
-    public CostTypeController(IGeneralTypeService service, string category = AccountConstant.CostType) : base(service, category)
+    public CostTypeController(IGeneralTypeService service) : base(service, AccountConstant.CostType)
     {
     }
 }

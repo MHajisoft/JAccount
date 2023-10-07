@@ -14,6 +14,12 @@ public abstract class EntityController<TEntity> : BaseController where TEntity :
     }
 
     [HttpGet]
+    public virtual async Task<List<TEntity>> GetAll()
+    {
+        return await Service.Search();
+    }
+
+    [HttpGet]
     public virtual async Task<TEntity?> Load(long id)
     {
         return await Service.Get(id);
