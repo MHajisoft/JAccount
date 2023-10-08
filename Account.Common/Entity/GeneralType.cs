@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-
 namespace Account.Common.Entity;
 
 public class GeneralType : BaseEntity
@@ -15,4 +13,6 @@ public class GeneralType : BaseEntity
     public ICollection<Transaction> TransactionAccountTypes { get; set; } = new List<Transaction>();
 
     public ICollection<Transaction> TransactionCostTypes { get; set; } = new List<Transaction>();
+    
+    public ICollection<Transaction> TransactionItemTypes { get; set; } = new List<Transaction>();
 }

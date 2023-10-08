@@ -21,5 +21,6 @@ public class PersonConfiguration : BaseEntityConfiguration<Person>
         builder.Property(x => x.IsHaj).IsRequired();
         builder.Property(x => x.IsHolyVisit).IsRequired();
         builder.Property(x => x.Thumbnail).IsRequired(false);
+        builder.Property(x => x.Description).IsRequired(false).HasMaxLength(500).IsUnicode();
     }
 }

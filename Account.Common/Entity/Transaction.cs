@@ -13,6 +13,12 @@ public class Transaction : BaseEntity
     public GeneralType? CostType { get; set; } // نوع هزینه : عمومی، محرم، صفر
     public long CostTypeId { get; set; }
 
+    //ToDo شاید بهتر باشد اجباری گردد
+    public GeneralType? ItemType { get; set; } // شرح عملکرد به صورت تعاریف پیش فرض
+    public long? ItemTypeId { get; set; }
+
+    public string? Description { get; set; }
+    
     public BudgetType BudgetType { get; set; }
 
     public long Budget { get; set; }

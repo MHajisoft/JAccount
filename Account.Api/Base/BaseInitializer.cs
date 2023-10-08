@@ -4,6 +4,7 @@ using Account.Api.Middleware;
 using Account.Common;
 using Account.Common.Base;
 using Account.Common.Entity;
+using Account.Common.Enum;
 using Account.Common.IService;
 using Account.Common.Util;
 using Account.Service.InfraStructure;
@@ -232,18 +233,36 @@ public abstract class BaseInitializer
                 var relativeTypeList = new List<GeneralType>
                 {
                     new() { Category = AccountConstant.RelativeType, Title = "پدر", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.RelativeType, Title = "مادر", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.RelativeType, Title = "فرزند", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.RelativeType, Title = "برادر", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.RelativeType, Title = "خواهر", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.RelativeType, Title = "داماد", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.RelativeType, Title = "عروس", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.RelativeType, Title = "مادر", IsActive = true, OrderIndex = 2, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.RelativeType, Title = "فرزند", IsActive = true, OrderIndex = 3, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.RelativeType, Title = "برادر", IsActive = true, OrderIndex = 4, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.RelativeType, Title = "خواهر", IsActive = true, OrderIndex = 5, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.RelativeType, Title = "داماد", IsActive = true, OrderIndex = 6, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.RelativeType, Title = "عروس", IsActive = true, OrderIndex = 7, CreateUserId = 1, CreateDate = DateTime.Now },
+                };
+
+                var itemTypeList = new List<GeneralType>
+                {
+                    new() { Category = AccountConstant.ItemType, Title = "شیرینی", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.ItemType, Title = "خرما", IsActive = true, OrderIndex = 2, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.ItemType, Title = "سخنرانی", IsActive = true, OrderIndex = 3, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.ItemType, Title = "مداحی", IsActive = true, OrderIndex = 4, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { Category = AccountConstant.ItemType, Title = "متفرقه", IsActive = true, OrderIndex = 1000, CreateUserId = 1, CreateDate = DateTime.Now },
                 };
 
                 await dbContext.GeneralTypes.AddRangeAsync(accountTypeList);
                 await dbContext.GeneralTypes.AddRangeAsync(costTypeList);
                 await dbContext.GeneralTypes.AddRangeAsync(relativeTypeList);
+                await dbContext.GeneralTypes.AddRangeAsync(itemTypeList);
 
+                var personList = new List<Person>
+                {
+                    new() { FirstName = "ناشناس", Gender = Gender.Male, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { FirstName = "هزینه متفرقه", Gender = Gender.Male, CreateUserId = 1, CreateDate = DateTime.Now },
+                };
+
+                await dbContext.Persons.AddRangeAsync(personList);
+                
                 await dbContext.SaveChangesAsync();
             }
         }
