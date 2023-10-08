@@ -16,4 +16,40 @@
         <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.3.0" />
         <PackageReference Include="RestSharp" Version="110.2.0" />
     </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="Resource\Resource.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+            <CustomToolNamespace>Account.Common.Resource</CustomToolNamespace>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resource\ExceptionResource.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>ExceptionResource.Designer.cs</LastGenOutput>
+            <CustomToolNamespace>Account.Common.Resource</CustomToolNamespace>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resource\MembershipResource.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>MembershipResource.Designer.cs</LastGenOutput>
+            <CustomToolNamespace>Account.Common.Resource</CustomToolNamespace>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Resource\ExceptionResource.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ExceptionResource.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resource\MembershipResource.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Membership.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resource\Resource.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resource.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
 </Project>

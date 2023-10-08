@@ -6,4 +6,5 @@ namespace Account.Api.Base;
 [Route("api/[controller]/[action]")]
 public abstract class BaseController : ControllerBase
 {
+    protected Response ResponseResult { get; } = new(null);
 }

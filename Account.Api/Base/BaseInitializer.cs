@@ -7,6 +7,7 @@ using Account.Common.Entity;
 using Account.Common.Enum;
 using Account.Common.IService;
 using Account.Common.Util;
+using Account.Service.Base;
 using Account.Service.InfraStructure;
 using Account.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -44,6 +45,9 @@ public abstract class BaseInitializer
 
         #region Add services to the container
 
+        builder.Services.AddScoped<AppRoleManager>();
+        builder.Services.AddScoped<AppUserManager>();
+        builder.Services.AddScoped<AppSigninManager>();
         builder.Services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
 
         /*builder.Services.AddScoped<ICustomConverter, CustomConverter>();
@@ -192,16 +196,14 @@ public abstract class BaseInitializer
             var dbContext = scopedProvider.GetRequiredService<T>();
             await dbContext.Database.MigrateAsync();
 
-            var userManager = scopedProvider.GetRequiredService<UserManager<AppUser>>();
-            var roleManager = scopedProvider.GetRequiredService<RoleManager<AppRole>>();
+            var userManager = scopedProvider.GetRequiredService<AppUserManager>();
+            var roleManager = scopedProvider.GetRequiredService<AppRoleManager>();
 
             var list = await roleManager.Roles.ToListAsync();
             if (!list.Any())
             {
-                var adminRole = new AppRole { Name = "Admin", Title = "مدیر" };
-                var userRole = new AppRole { Name = "User", Title = "کاربر" };
-                await roleManager.CreateAsync(adminRole);
-                await roleManager.CreateAsync(userRole);
+                await roleManager.CreateAsync(AccountRoles.Admin);
+                await roleManager.CreateAsync(AccountRoles.User);
 
                 var adminUser = new AppUser { UserName = "Admin", DisplayName = "مدیر سامانه" };
                 await userManager.CreateAsync(adminUser);
