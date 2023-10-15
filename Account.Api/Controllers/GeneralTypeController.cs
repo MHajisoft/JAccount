@@ -1,11 +1,14 @@
 ﻿using Account.Api.Base;
+using Account.Common.Base;
 using Account.Common.Dto;
 using Account.Common.Entity;
 using Account.Common.IService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Account.Api.Controllers;
 
+[Authorize(Roles = nameof(AccountRoles.Admin))]
 public abstract class GeneralTypeController : EntityController<GeneralType, GeneralTypeDto>
 {
     protected readonly string Category;

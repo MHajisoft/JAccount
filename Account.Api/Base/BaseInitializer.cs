@@ -210,8 +210,11 @@ public abstract class BaseInitializer
                 var adminUser = new AppUser { UserName = "Admin", DisplayName = "مدیر سامانه" };
                 await userManager.CreateAsync(adminUser);
 
-                await userManager.AddToRoleAsync(adminUser, "Admin");
-                await userManager.AddToRoleAsync(adminUser, "User");
+                var systemUser = new AppUser { UserName = "System", DisplayName = "سیستم" };
+                await userManager.CreateAsync(systemUser);
+
+                await userManager.AddToRoleAsync(adminUser, nameof(AccountRoles.Admin));
+                await userManager.AddToRoleAsync(adminUser, nameof(AccountRoles.User));
 
                 await userManager.AddPasswordAsync(adminUser, "1qaz!QAZ");
 

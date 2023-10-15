@@ -5,6 +5,7 @@ public class AccountConstant
     public const string JwtSecretKey = "J@m3J@f@r!SecretKeyFor@ll$yst3ms!n@p!";
 
     public const string CorsPolicy = nameof(CorsPolicy);
+    public const string SystemUsername = "System";
 
     public const string RelativeType = nameof(RelativeType);
 
