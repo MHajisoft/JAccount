@@ -10,6 +10,7 @@ using Account.Common.Util;
 using Account.Service.Base;
 using Account.Service.InfraStructure;
 using Account.Service.Services;
+using AutoMapper.Extensions.ExpressionMapping;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -63,6 +64,7 @@ public abstract class BaseInitializer
         #region AutoMapper
 
         builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+        builder.Services.AddAutoMapper(x => x.AddExpressionMapping());
 
         #endregion
 
@@ -264,7 +266,7 @@ public abstract class BaseInitializer
                 };
 
                 await dbContext.Persons.AddRangeAsync(personList);
-                
+
                 await dbContext.SaveChangesAsync();
             }
         }

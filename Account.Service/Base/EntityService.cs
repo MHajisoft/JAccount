@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Account.Common.Dto;
 using Account.Common.Entity;
 using Account.Common.IService;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Account.Service.Base;
 
-public abstract class EntityService<TEntity> : ServiceBase, IEntityService<TEntity> where TEntity : BaseEntity, new()
+public abstract class EntityService<TEntity, TDto> : ServiceBase, IEntityService<TEntity, TDto> where TEntity : BaseEntity, new() where TDto : BaseDto
 {
     protected readonly IRepository<TEntity> Repository;
     protected readonly DbSet<TEntity> DbSet;
@@ -17,33 +18,31 @@ public abstract class EntityService<TEntity> : ServiceBase, IEntityService<TEnti
         DbSet = DbContext.Set<TEntity>();
     }
 
-    public virtual async Task<TEntity?> Get(long id)
+    public virtual async Task<TDto?> Get(long id)
     {
-        return await Repository.Load(id);
+        return AppMapper.Map<TDto>(await Repository.Load(id));
     }
 
-    public virtual async Task<List<TEntity>> Search(Expression<Func<TEntity, bool>>? expression)
+    public virtual async Task<List<TDto>> Search(Expression<Func<TDto, bool>>? expression)
     {
-        return await Repository.Search(expression);
-    }
-    
-    public virtual async Task<TEntity> Update(TEntity entity)
-    {
-        return await Repository.Update(entity);
+        var entityExpression = AppMapper.Map<Expression<Func<TEntity, bool>>>(expression);
+        return AppMapper.Map<List<TDto>>(await Repository.Search(entityExpression));
     }
 
-    public Task<List<TEntity>> UpdateCollection(List<TEntity> list)
+    public virtual async Task<TDto> Update(TDto dto)
     {
-        throw new NotImplementedException();
+        var entity = dto.IsFresh() ? AppMapper.Map<TEntity>(dto) : AppMapper.Map<TEntity>(await Repository.Load(dto.Id));
+
+        var result = await Repository.Update(entity);
+
+        await Repository.SaveChanges();
+        
+        return AppMapper.Map<TDto>(result);
     }
 
     public virtual async Task Delete(long id)
     {
         await Repository.Delete(id);
-    }
-
-    public void Delete(TEntity entity)
-    {
-        Repository.Delete(entity);
+        await Repository.SaveChanges();
     }
 }

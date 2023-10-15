@@ -46,7 +46,7 @@ public class SerilogInitializer
         sqlLogger = sqlLogger.WriteTo.MSSqlServer(connectionString: connectionString,
             sinkOptions: new MSSqlServerSinkOptions
             {
-                TableName = "Core_Log_Log",
+                TableName = "Account_Log",
                 //SchemaName = "dbo",
                 AutoCreateSqlTable = true,
                 // BatchPostingLimit = 1,

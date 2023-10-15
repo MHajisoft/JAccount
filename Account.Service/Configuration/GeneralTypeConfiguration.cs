@@ -13,5 +13,6 @@ public class GeneralTypeConfiguration : BaseEntityConfiguration<GeneralType>
         builder.Property(x => x.Title).IsRequired().HasMaxLength(50).IsUnicode();
         builder.Property(x => x.OrderIndex).IsRequired();
         builder.Property(x => x.IsActive).IsRequired();
+        builder.HasIndex(x => new { x.Category, x.Title }).IsUnique();
     }
 }

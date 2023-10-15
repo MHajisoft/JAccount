@@ -1,7 +1,8 @@
-﻿using Account.Common.Entity;
+﻿using Account.Common.Dto;
+using Account.Common.Entity;
 
 namespace Account.Common.IService;
 
-public interface IAttachmentService : IEntityService<Attachment>
+public interface IAttachmentService : IEntityService<Attachment, AttachmentDto>
 {
 }

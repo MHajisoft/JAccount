@@ -1,34 +1,35 @@
+using Account.Common.Dto;
 using Account.Common.Entity;
 using Account.Common.IService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Account.Api.Base;
 
-public abstract class EntityController<TEntity> : BaseController where TEntity : BaseEntity, new()
+public abstract class EntityController<TEntity, TDto> : BaseController where TEntity : BaseEntity, new() where TDto : BaseDto
 {
-    protected readonly IEntityService<TEntity> Service;
+    protected readonly IEntityService<TEntity, TDto> Service;
 
-    public EntityController(IEntityService<TEntity> service)
+    public EntityController(IEntityService<TEntity, TDto> service)
     {
         Service = service;
     }
 
     [HttpGet]
-    public virtual async Task<List<TEntity>> GetAll()
+    public virtual async Task<List<TDto>> GetAll()
     {
         return await Service.Search();
     }
 
     [HttpGet]
-    public virtual async Task<TEntity?> Load(long id)
+    public virtual async Task<TDto?> Load(long id)
     {
         return await Service.Get(id);
     }
 
     [HttpPost]
-    public virtual async Task<TEntity?> Update(TEntity entity)
+    public virtual async Task<TDto> Update(TDto dto)
     {
-        return await Service.Update(entity);
+        return await Service.Update(dto);
     }
 
     [HttpDelete]

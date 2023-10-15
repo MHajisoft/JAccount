@@ -1,11 +1,12 @@
 ﻿using Account.Api.Base;
+using Account.Common.Dto;
 using Account.Common.Entity;
 using Account.Common.IService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Account.Api.Controllers;
 
-public abstract class GeneralTypeController : EntityController<GeneralType>
+public abstract class GeneralTypeController : EntityController<GeneralType, GeneralTypeDto>
 {
     protected readonly string Category;
 
@@ -15,22 +16,22 @@ public abstract class GeneralTypeController : EntityController<GeneralType>
     }
 
     [HttpGet]
-    public override async Task<List<GeneralType>> GetAll()
+    public override async Task<List<GeneralTypeDto>> GetAll()
     {
         return await Service.Search(x => x.Category == Category);
     }
 
     [HttpGet]
-    public override async Task<GeneralType?> Load(long id)
+    public override async Task<GeneralTypeDto?> Load(long id)
     {
         return (await Service.Search(x => x.Id == id && x.Category == Category)).SingleOrDefault();
     }
 
     [HttpPost]
-    public override Task<GeneralType?> Update(GeneralType entity)
+    public override Task<GeneralTypeDto> Update([FromBody]GeneralTypeDto dto)
     {
-        entity.Category = Category;
+        dto.Category = Category;
 
-        return base.Update(entity);
+        return ((IGeneralTypeService)Service).Update(dto, Category);
     }
 }

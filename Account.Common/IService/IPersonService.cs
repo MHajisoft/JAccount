@@ -1,7 +1,8 @@
-﻿using Account.Common.Entity;
+﻿using Account.Common.Dto;
+using Account.Common.Entity;
 
 namespace Account.Common.IService;
 
-public interface IPersonService : IEntityService<Person>
+public interface IPersonService : IEntityService<Person, PersonDto>
 {
 }

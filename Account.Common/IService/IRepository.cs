@@ -14,10 +14,8 @@ public interface IRepository<T> where T : BaseEntity
 
 
     Task Delete(long id);
-    Task DeleteCollection(IEnumerable<long> idList);
 
     void Delete(T entity);
-    void DeleteCollection(IEnumerable<T> entityList);
 
     Task SaveChanges();
 }

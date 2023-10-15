@@ -121,18 +121,6 @@ public class RepositoryBase<T> : IRepository<T> where T : BaseEntity
         _dbSet.Remove(entity);
     }
 
-    public async Task DeleteCollection(IEnumerable<long> idList)
-    {
-        foreach (var id in idList)
-            await Delete(id);
-    }
-
-    public void DeleteCollection(IEnumerable<T> entityList)
-    {
-        foreach (var entity in entityList)
-            Delete(entity);
-    }
-
     #endregion
 
     #region SaveChanges
