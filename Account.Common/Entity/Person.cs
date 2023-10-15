@@ -8,6 +8,8 @@ public class Person : BaseEntity
 
     public string? LastName { get; set; }
 
+    public string? NickName { get; set; }
+
     public Person? Father { get; set; }
     public long? FatherId { get; set; }
 
@@ -26,7 +28,7 @@ public class Person : BaseEntity
     public bool IsHolyVisit { get; set; }
 
     public byte[]? Thumbnail { get; set; }
-    
+
     public string? Description { get; set; }
 
     public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();

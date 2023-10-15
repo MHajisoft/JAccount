@@ -8,6 +8,8 @@ public class PersonDto : BaseDto
 
     public string? LastName { get; set; }
 
+    public string? NickName { get; set; }
+
     public string? FatherFirstName { get; set; }
 
     public long? FatherId { get; set; }
