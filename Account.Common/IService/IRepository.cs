@@ -5,7 +5,7 @@ namespace Account.Common.IService;
 
 public interface IRepository<T> where T : BaseEntity
 {
-    Task<T> Load(long id, bool needToCheckChangeHistory = false);
+    Task<T> Load(long id);
 
     Task<List<T>> Search(Expression<Func<T, bool>>? expression);
     Task<int> SearchCount(Expression<Func<T, bool>>? expression);

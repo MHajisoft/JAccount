@@ -23,7 +23,7 @@ public class RepositoryBase<T> : IRepository<T> where T : BaseEntity
 
     #region Load
 
-    public async Task<T> Load(long id, bool needToCheckChangeHistory = false)
+    public async Task<T> Load(long id)
     {
         if (id == 0)
             //Prov: در اینجا و محل های مشابه امکان نمایش عنوان فارسی انتیتی وجود ندارد. زیرا عملکرد کلاس به صورت جنریک بوده و اگر بخواهیم به متد
