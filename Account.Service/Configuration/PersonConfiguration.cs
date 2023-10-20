@@ -13,9 +13,9 @@ public class PersonConfiguration : BaseEntityConfiguration<Person>
         builder.Property(x => x.LastName).HasMaxLength(70).IsRequired(false).IsUnicode();
         builder.Property(x => x.NickName).HasMaxLength(100).IsRequired(false).IsUnicode();
 
-        builder.HasOne(bp => bp.Father).WithMany().HasForeignKey(x => x.FatherId).IsRequired(false);
-        builder.HasOne(bp => bp.Relative).WithMany().HasForeignKey(x => x.RelativeId).IsRequired(false);
-        builder.HasOne(bp => bp.RelativeType).WithMany().HasForeignKey(x => x.RelativeTypeId).IsRequired(false);
+        builder.HasOne(bp => bp.Father).WithMany(x => x.Fathers).HasForeignKey(x => x.FatherId).IsRequired(false);
+        builder.HasOne(bp => bp.Relative).WithMany(x => x.Relatives).HasForeignKey(x => x.RelativeId).IsRequired(false);
+        builder.HasOne(bp => bp.RelativeType).WithMany(x => x.RelativeTypes).HasForeignKey(x => x.RelativeTypeId).IsRequired(false);
 
         builder.Property(x => x.Gender).IsRequired();
         builder.Property(x => x.IsAlive).IsRequired();

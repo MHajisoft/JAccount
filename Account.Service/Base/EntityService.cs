@@ -31,7 +31,7 @@ public abstract class EntityService<TEntity, TDto> : ServiceBase, IEntityService
 
     public virtual async Task<TDto> Update(TDto dto)
     {
-        var entity = dto.IsFresh() ? AppMapper.Map<TEntity>(dto) : AppMapper.Map<TEntity>(await Repository.Load(dto.Id));
+        var entity = dto.IsFresh() ? AppMapper.Map(dto, new TEntity()) : AppMapper.Map(dto, await Repository.Load(dto.Id));
 
         var result = await Repository.Update(entity);
 

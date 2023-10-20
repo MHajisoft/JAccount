@@ -264,8 +264,8 @@ public abstract class BaseInitializer
 
                 var personList = new List<Person>
                 {
-                    new() { FirstName = "ناشناس", Gender = Gender.Male, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { FirstName = "هزینه متفرقه", Gender = Gender.Male, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new() { FirstName = "ناشناس", Gender = Gender.Male, CreateUserId = 1, IsAlive = true, CreateDate = DateTime.Now },
+                    new() { FirstName = "هزینه متفرقه", Gender = Gender.Male, CreateUserId = 1, IsAlive = true, CreateDate = DateTime.Now },
                 };
 
                 await dbContext.Persons.AddRangeAsync(personList);

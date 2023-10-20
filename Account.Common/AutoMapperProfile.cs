@@ -8,9 +8,16 @@ public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        CreateMap<Person, PersonDto>().ReverseMap();
-        CreateMap<Attachment, AttachmentDto>().ReverseMap();
-        CreateMap<GeneralType, GeneralTypeDto>().ReverseMap();
-        CreateMap<Transaction, TransactionDto>().ReverseMap();
+        CreateMap<Person, PersonDto>();
+        CreateMap<PersonDto, Person>();
+
+        CreateMap<Attachment, AttachmentDto>();
+        CreateMap<AttachmentDto, Attachment>();
+        
+        CreateMap<GeneralType, GeneralTypeDto>();
+        CreateMap<GeneralTypeDto, GeneralType>();
+        
+        CreateMap<Transaction, TransactionDto>();
+        CreateMap<TransactionDto, Transaction>();
     }
 }

@@ -15,4 +15,6 @@ public class GeneralType : BaseEntity
     public ICollection<Transaction> TransactionCostTypes { get; set; } = new List<Transaction>();
     
     public ICollection<Transaction> TransactionItemTypes { get; set; } = new List<Transaction>();
+
+    public ICollection<Person> RelativeTypes { get; set; } = new List<Person>();
 }

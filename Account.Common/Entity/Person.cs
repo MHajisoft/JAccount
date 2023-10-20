@@ -32,4 +32,8 @@ public class Person : BaseEntity
     public string? Description { get; set; }
 
     public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
+
+    public ICollection<Person> Fathers { get; set; } = new List<Person>();
+    
+    public ICollection<Person> Relatives { get; set; } = new List<Person>();
 }

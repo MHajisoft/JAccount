@@ -67,7 +67,7 @@ public class RepositoryBase<T> : IRepository<T> where T : BaseEntity
         }
         else
         {
-            //await UpdateAsync(entity, cancellationToken);
+            _dbSet.Update(entity);
         }
 
         return entity;

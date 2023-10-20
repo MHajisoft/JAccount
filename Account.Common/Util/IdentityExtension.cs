@@ -11,7 +11,7 @@ namespace Account.Common.Util
 
         public static long? GetUserId(this ClaimsPrincipal user)
         {
-            var value = user.Claims.FirstOrDefault(i => i.Type == ClaimTypes.UserData)?.Value;
+            var value = user.Claims.FirstOrDefault(i => i.Type == ClaimTypes.NameIdentifier)?.Value;
             return value is null ? null : Convert.ToInt64(value);
         }
     }

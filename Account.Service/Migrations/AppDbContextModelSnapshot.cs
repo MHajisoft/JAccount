@@ -549,15 +549,15 @@ namespace Account.Service.Migrations
                         .IsRequired();
 
                     b.HasOne("Account.Common.Entity.Person", "Father")
-                        .WithMany()
+                        .WithMany("Fathers")
                         .HasForeignKey("FatherId");
 
                     b.HasOne("Account.Common.Entity.Person", "Relative")
-                        .WithMany()
+                        .WithMany("Relatives")
                         .HasForeignKey("RelativeId");
 
                     b.HasOne("Account.Common.Entity.GeneralType", "RelativeType")
-                        .WithMany()
+                        .WithMany("RelativeTypes")
                         .HasForeignKey("RelativeTypeId");
 
                     b.HasOne("Account.Common.Entity.AppUser", "UpdateUser")
@@ -677,6 +677,8 @@ namespace Account.Service.Migrations
 
             modelBuilder.Entity("Account.Common.Entity.GeneralType", b =>
                 {
+                    b.Navigation("RelativeTypes");
+
                     b.Navigation("TransactionAccountTypes");
 
                     b.Navigation("TransactionCostTypes");
@@ -686,6 +688,10 @@ namespace Account.Service.Migrations
 
             modelBuilder.Entity("Account.Common.Entity.Person", b =>
                 {
+                    b.Navigation("Fathers");
+
+                    b.Navigation("Relatives");
+
                     b.Navigation("Transactions");
                 });
 

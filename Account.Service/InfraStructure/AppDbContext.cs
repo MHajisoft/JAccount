@@ -48,10 +48,10 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, long>
         base.OnModelCreating(builder);
     }
 
-    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
         var date = DateTime.Now;
-        var userId = GetUserId(_httpContextAccessor);
+        var userId = await GetUserId(_httpContextAccessor);
 
         #region Create Data
 
@@ -62,7 +62,7 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, long>
             var entity = entry.Entity as BaseEntity;
 
             entity!.CreateDate = date;
-            entity!.CreateUserId = userId;
+            entity.CreateUserId = userId.Value;
         });
 
         #endregion
@@ -81,18 +81,18 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, long>
 
         #endregion
 
-        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
 
     private static long? _systemUserId;
 
-    private long GetUserId(IHttpContextAccessor httpContextAccessor)
+    private async Task<long?> GetUserId(IHttpContextAccessor httpContextAccessor)
     {
-        _systemUserId ??= Users.First(x => x.UserName!.Equals(AccountConstant.SystemUsername)).Id;
+        _systemUserId ??= (await Users.FirstOrDefaultAsync(x => x.UserName!.Equals(AccountConstant.SystemUsername)))?.Id;
 
         var result = httpContextAccessor.HttpContext?.User.GetUserId();
 
-        return result ?? (long)_systemUserId;
+        return result ?? _systemUserId;
     }
 
     #endregion
