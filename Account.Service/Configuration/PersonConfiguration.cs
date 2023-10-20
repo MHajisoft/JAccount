@@ -1,4 +1,5 @@
 using Account.Common.Entity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Account.Service.Configuration;
@@ -23,5 +24,18 @@ public class PersonConfiguration : BaseEntityConfiguration<Person>
         builder.Property(x => x.IsHolyVisit).IsRequired();
         builder.Property(x => x.Thumbnail).IsRequired(false);
         builder.Property(x => x.Description).IsRequired(false).HasMaxLength(500).IsUnicode();
+
+        builder.HasIndex(x => new
+        {
+            x.FirstName,
+            x.LastName,
+            x.FatherId
+        }).IsUnique().HasFilter($"{nameof(Person.FatherId)} IS NOT NULL");
+        builder.HasIndex(x => new
+        {
+            x.FirstName,
+            x.LastName,
+            x.RelativeId
+        }).IsUnique().HasFilter($"{nameof(Person.RelativeId)} IS NOT NULL");
     }
 }
