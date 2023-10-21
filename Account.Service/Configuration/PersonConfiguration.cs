@@ -24,7 +24,10 @@ public class PersonConfiguration : BaseEntityConfiguration<Person>
         builder.Property(x => x.IsHolyVisit).IsRequired();
         builder.Property(x => x.Thumbnail).IsRequired(false);
         builder.Property(x => x.Description).IsRequired(false).HasMaxLength(500).IsUnicode();
+        builder.Property(x => x.Mobile).IsRequired(false).HasMaxLength(11).IsFixedLength().IsUnicode(false);
+        builder.Property(x => x.NationalCode).IsRequired(false).HasMaxLength(10).IsFixedLength().IsUnicode(false);
 
+        builder.HasIndex(x => x.NationalCode).HasFilter($"{nameof(Person.NationalCode)} IS NOT NULL");
         builder.HasIndex(x => new
         {
             x.FirstName,

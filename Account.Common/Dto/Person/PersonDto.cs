@@ -29,4 +29,10 @@ public class PersonDto : BaseDto
     public bool IsHolyVisit { get; set; }
 
     public byte[]? Thumbnail { get; set; }
+    
+    public string? Description { get; set; }
+    
+    public string? Mobile { get; set; }
+    
+    public string? NationalCode { get; set; }
 }

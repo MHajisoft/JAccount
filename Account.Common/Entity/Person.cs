@@ -30,6 +30,10 @@ public class Person : BaseEntity
     public byte[]? Thumbnail { get; set; }
 
     public string? Description { get; set; }
+    
+    public string? Mobile { get; set; }
+    
+    public string? NationalCode { get; set; }
 
     public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
 
