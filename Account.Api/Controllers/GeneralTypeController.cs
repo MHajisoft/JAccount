@@ -25,13 +25,19 @@ public abstract class GeneralTypeController : EntityController<GeneralType, Gene
     }
 
     [HttpGet]
+    public async Task<List<GeneralTypeDto>> GetAllActives()
+    {
+        return await Service.Search(x => x.Category == Category && x.IsActive == true);
+    }
+
+    [HttpGet]
     public override async Task<GeneralTypeDto?> Load(long id)
     {
         return (await Service.Search(x => x.Id == id && x.Category == Category)).SingleOrDefault();
     }
 
     [HttpPost]
-    public override Task<GeneralTypeDto> Update([FromBody]GeneralTypeDto dto)
+    public override Task<GeneralTypeDto> Update([FromBody] GeneralTypeDto dto)
     {
         dto.Category = Category;
 
