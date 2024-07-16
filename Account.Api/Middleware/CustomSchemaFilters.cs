@@ -24,13 +24,13 @@ public class EnumSchemaFilter : ISchemaFilter
         if (context.Type.IsEnum)
         {
             model.Enum.Clear();
-            foreach (string enumName in Enum.GetNames(context.Type))
+            foreach (var enumName in Enum.GetNames(context.Type))
             {
-                System.Reflection.MemberInfo memberInfo = context.Type.GetMember(enumName).FirstOrDefault(m => m.DeclaringType == context.Type);
-                EnumMemberAttribute enumMemberAttribute = memberInfo == null
+                var memberInfo = context.Type.GetMember(enumName).FirstOrDefault(m => m.DeclaringType == context.Type);
+                var enumMemberAttribute = memberInfo == null
                     ? null
                     : memberInfo.GetCustomAttributes(typeof(EnumMemberAttribute), false).OfType<EnumMemberAttribute>().FirstOrDefault();
-                string label = enumMemberAttribute == null || string.IsNullOrWhiteSpace(enumMemberAttribute.Value)
+                var label = enumMemberAttribute == null || string.IsNullOrWhiteSpace(enumMemberAttribute.Value)
                     ? enumName
                     : enumMemberAttribute.Value;
                 model.Enum.Add(new OpenApiString(label));

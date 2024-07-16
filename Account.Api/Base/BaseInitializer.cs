@@ -63,7 +63,7 @@ public abstract class BaseInitializer
 
         #region AutoMapper
 
-        builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+        builder.Services.AddAutoMapper(x => x.AddProfile<AutoMapperProfile>());
         builder.Services.AddAutoMapper(x => x.AddExpressionMapping());
 
         #endregion
@@ -76,7 +76,12 @@ public abstract class BaseInitializer
             {
                 config.RequireHttpsMetadata = false;
                 config.SaveToken = true;
-                config.TokenValidationParameters = new TokenValidationParameters { ValidateIssuerSigningKey = true, IssuerSigningKey = new SymmetricSecurityKey(key), ValidateIssuer = false, ValidateAudience = false };
+                config.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true, 
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false, ValidateAudience = false
+                };
             });
 
         #endregion
@@ -103,11 +108,18 @@ public abstract class BaseInitializer
         builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
         builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-        builder.Services.AddControllers(x => { x.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())); })
-            .AddJsonOptions(x => { x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull; });
+        builder.Services.AddControllers(x =>
+            {
+                x.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()));
+            })
+            .AddJsonOptions(x =>
+            {
+                x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+            });
 
         builder.Services.Configure<JsonOptions>(o => o.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
-        builder.Services.Configure<Microsoft.AspNetCore.Mvc.JsonOptions>(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+        builder.Services.Configure<Microsoft.AspNetCore.Mvc.JsonOptions>(o =>
+            o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
         // جهت خاموش کردن ولیدیت انتیتی قبل از ورود به کنترلر  
         builder.Services.Configure<ApiBehaviorOptions>(x => x.SuppressModelStateInvalidFilter = true);
 
@@ -123,14 +135,26 @@ public abstract class BaseInitializer
             c.SchemaFilter<EnumSchemaFilter>();
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below. \r\n\r\nExample: 'Bearer 12345abcdef'",
+                Description =
+                    "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below. \r\n\r\nExample: 'Bearer 12345abcdef'",
                 Name = KnownHeaders.Authorization,
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
                 Scheme = JwtBearerDefaults.AuthenticationScheme
             });
 
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement { { new OpenApiSecurityScheme { Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = JwtBearerDefaults.AuthenticationScheme }, Scheme = "oauth2", Name = JwtBearerDefaults.AuthenticationScheme, In = ParameterLocation.Header }, new List<string>() } });
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                            { Type = ReferenceType.SecurityScheme, Id = JwtBearerDefaults.AuthenticationScheme },
+                        Scheme = "oauth2", Name = JwtBearerDefaults.AuthenticationScheme, In = ParameterLocation.Header
+                    },
+                    new List<string>()
+                }
+            });
 
             c.UseInlineDefinitionsForEnums(); //add this...
         });
@@ -220,41 +244,133 @@ public abstract class BaseInitializer
 
                 var accountTypeList = new List<GeneralType>
                 {
-                    new() { Category = AccountConstant.AccountType, Title = "نقدی", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.AccountType, Title = "حواله بانکی", IsActive = true, OrderIndex = 2, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.AccountType, Title = "کارت به کارت", IsActive = true, OrderIndex = 3, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.AccountType, Title = "دستگاه پوز", IsActive = true, OrderIndex = 4, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.AccountType, Title = "چک", IsActive = true, OrderIndex = 5, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new()
+                    {
+                        Category = AccountConstant.AccountType, Title = "نقدی", IsActive = true, OrderIndex = 1,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.AccountType, Title = "حواله بانکی", IsActive = true, OrderIndex = 2,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.AccountType, Title = "کارت به کارت", IsActive = true, OrderIndex = 3,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.AccountType, Title = "دستگاه پوز", IsActive = true, OrderIndex = 4,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.AccountType, Title = "چک", IsActive = true, OrderIndex = 5,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
                 };
 
                 var costTypeList = new List<GeneralType>
                 {
-                    new() { Category = AccountConstant.CostType, Title = "عمومی", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.CostType, Title = "پذیرایی", IsActive = true, OrderIndex = 2, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.CostType, Title = "محرم و صفر", IsActive = true, OrderIndex = 3, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.CostType, Title = "اعیاد", IsActive = true, OrderIndex = 4, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.CostType, Title = "نیمه شعبان", IsActive = true, OrderIndex = 5, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.CostType, Title = "فاطمیه", IsActive = true, OrderIndex = 6, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new()
+                    {
+                        Category = AccountConstant.CostType, Title = "عمومی", IsActive = true, OrderIndex = 1,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.CostType, Title = "پذیرایی", IsActive = true, OrderIndex = 2,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.CostType, Title = "محرم و صفر", IsActive = true, OrderIndex = 3,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.CostType, Title = "اعیاد", IsActive = true, OrderIndex = 4,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.CostType, Title = "نیمه شعبان", IsActive = true, OrderIndex = 5,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.CostType, Title = "فاطمیه", IsActive = true, OrderIndex = 6,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
                 };
 
                 var relativeTypeList = new List<GeneralType>
                 {
-                    new() { Category = AccountConstant.RelativeType, Title = "پدر", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.RelativeType, Title = "مادر", IsActive = true, OrderIndex = 2, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.RelativeType, Title = "فرزند", IsActive = true, OrderIndex = 3, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.RelativeType, Title = "برادر", IsActive = true, OrderIndex = 4, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.RelativeType, Title = "خواهر", IsActive = true, OrderIndex = 5, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.RelativeType, Title = "داماد", IsActive = true, OrderIndex = 6, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.RelativeType, Title = "عروس", IsActive = true, OrderIndex = 7, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new()
+                    {
+                        Category = AccountConstant.RelativeType, Title = "پدر", IsActive = true, OrderIndex = 1,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.RelativeType, Title = "مادر", IsActive = true, OrderIndex = 2,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.RelativeType, Title = "فرزند", IsActive = true, OrderIndex = 3,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.RelativeType, Title = "برادر", IsActive = true, OrderIndex = 4,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.RelativeType, Title = "خواهر", IsActive = true, OrderIndex = 5,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.RelativeType, Title = "داماد", IsActive = true, OrderIndex = 6,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.RelativeType, Title = "عروس", IsActive = true, OrderIndex = 7,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
                 };
 
                 var itemTypeList = new List<GeneralType>
                 {
-                    new() { Category = AccountConstant.ItemType, Title = "شیرینی", IsActive = true, OrderIndex = 1, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.ItemType, Title = "خرما", IsActive = true, OrderIndex = 2, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.ItemType, Title = "سخنرانی", IsActive = true, OrderIndex = 3, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.ItemType, Title = "مداحی", IsActive = true, OrderIndex = 4, CreateUserId = 1, CreateDate = DateTime.Now },
-                    new() { Category = AccountConstant.ItemType, Title = "متفرقه", IsActive = true, OrderIndex = 1000, CreateUserId = 1, CreateDate = DateTime.Now },
+                    new()
+                    {
+                        Category = AccountConstant.ItemType, Title = "شیرینی", IsActive = true, OrderIndex = 1,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.ItemType, Title = "خرما", IsActive = true, OrderIndex = 2,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.ItemType, Title = "سخنرانی", IsActive = true, OrderIndex = 3,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.ItemType, Title = "مداحی", IsActive = true, OrderIndex = 4,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.ItemType, Title = "متفرقه", IsActive = true, OrderIndex = 1000,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
                 };
 
                 await dbContext.GeneralTypes.AddRangeAsync(accountTypeList);
@@ -264,8 +380,16 @@ public abstract class BaseInitializer
 
                 var personList = new List<Person>
                 {
-                    new() { FirstName = "ناشناس", Gender = Gender.Male, CreateUserId = 1, IsAlive = true, CreateDate = DateTime.Now },
-                    new() { FirstName = "هزینه متفرقه", Gender = Gender.Male, CreateUserId = 1, IsAlive = true, CreateDate = DateTime.Now },
+                    new()
+                    {
+                        FirstName = "ناشناس", Gender = Gender.Male, CreateUserId = 1, IsAlive = true,
+                        CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        FirstName = "هزینه متفرقه", Gender = Gender.Male, CreateUserId = 1, IsAlive = true,
+                        CreateDate = DateTime.Now
+                    },
                 };
 
                 await dbContext.Persons.AddRangeAsync(personList);
