@@ -7,15 +7,15 @@ public class Transaction : BaseEntity
     public Person? Person { get; set; }
     public long PersonId { get; set; }
 
-    public GeneralType? AccountType { get; set; } // نحوه دریافت و هزینه : نقدی، کارت، حواله
-    public long AccountTypeId { get; set; }
+    public GeneralType? Account { get; set; } // حساب: ملت ، مهر، نقدی، چک
+    public long AccountId { get; set; }
 
-    public GeneralType? CostType { get; set; } // نوع هزینه : عمومی، محرم، صفر
-    public long CostTypeId { get; set; }
+    public GeneralType? Cost { get; set; } // نوع هزینه : عمومی، محرم، صفر
+    public long CostId { get; set; }
 
     //ToDo شاید بهتر باشد اجباری گردد
-    public GeneralType? ItemType { get; set; } // شرح عملکرد به صورت تعاریف پیش فرض
-    public long? ItemTypeId { get; set; }
+    public GeneralType? Reason { get; set; } // شرح عملکرد به صورت تعاریف پیش فرض
+    public long? ReasonId { get; set; }
 
     public string? Description { get; set; }
     

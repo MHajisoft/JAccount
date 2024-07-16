@@ -6,12 +6,12 @@ public class TransactionDto : BaseDto
 {
     public long PersonId { get; set; }
 
-    public long AccountTypeId { get; set; }
+    public long AccountId { get; set; }
 
-    public long CostTypeId { get; set; }
+    public long CostId { get; set; }
 
     //ToDo شاید بهتر باشد اجباری گردد
-    public long? ItemTypeId { get; set; }
+    public long? ReasonId { get; set; }
 
     public string? Description { get; set; }
 

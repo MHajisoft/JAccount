@@ -21,13 +21,13 @@ public class TransactionService : EntityService<Transaction, TransactionDto>, IT
         if (await personRepository.SearchCount(x => x.Id == dto.PersonId) == 0)
             throw new Exception("شخص انتخاب شده معتبر نمی باشد");
 
-        if (!(await generalTypeRepository.Load(dto.AccountTypeId)).Category.Equals(AccountConstant.AccountType))
+        if (!(await generalTypeRepository.Load(dto.AccountId)).Category.Equals(AccountConstant.Account))
             throw new Exception("نحوه دریافت و هزینه معتبر نمی باشد");
 
-        if (!(await generalTypeRepository.Load(dto.CostTypeId)).Category.Equals(AccountConstant.CostType))
+        if (!(await generalTypeRepository.Load(dto.CostId)).Category.Equals(AccountConstant.Cost))
             throw new Exception("نوع هزینه معتبر نمی باشد");
 
-        if (dto.ItemTypeId is not null && !(await generalTypeRepository.Load(dto.ItemTypeId.Value)).Category.Equals(AccountConstant.ItemType))
+        if (dto.ReasonId is not null && !(await generalTypeRepository.Load(dto.ReasonId.Value)).Category.Equals(AccountConstant.Reason))
             throw new Exception("عملکرد انتخابی معتبر نمی باشد");
 
         return await base.Update(dto);

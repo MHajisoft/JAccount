@@ -9,9 +9,9 @@ public class AccountConstant
 
     public const string RelativeType = nameof(RelativeType);
 
-    public const string AccountType = nameof(AccountType);
+    public const string Account = nameof(Account);
 
-    public const string CostType = nameof(CostType);
+    public const string Cost = nameof(Cost);
 
-    public const string ItemType = nameof(ItemType);
+    public const string Reason = nameof(Reason);
 }

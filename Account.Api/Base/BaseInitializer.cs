@@ -246,27 +246,27 @@ public abstract class BaseInitializer
                 {
                     new()
                     {
-                        Category = AccountConstant.AccountType, Title = "نقدی", IsActive = true, OrderIndex = 1,
+                        Category = AccountConstant.Account, Title = "نقدی", IsActive = true, OrderIndex = 1,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.AccountType, Title = "حواله بانکی", IsActive = true, OrderIndex = 2,
+                        Category = AccountConstant.Account, Title = "حواله بانکی", IsActive = true, OrderIndex = 2,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.AccountType, Title = "کارت به کارت", IsActive = true, OrderIndex = 3,
+                        Category = AccountConstant.Account, Title = "کارت به کارت", IsActive = true, OrderIndex = 3,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.AccountType, Title = "دستگاه پوز", IsActive = true, OrderIndex = 4,
+                        Category = AccountConstant.Account, Title = "دستگاه پوز", IsActive = true, OrderIndex = 4,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.AccountType, Title = "چک", IsActive = true, OrderIndex = 5,
+                        Category = AccountConstant.Account, Title = "چک", IsActive = true, OrderIndex = 5,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                 };
@@ -275,32 +275,32 @@ public abstract class BaseInitializer
                 {
                     new()
                     {
-                        Category = AccountConstant.CostType, Title = "عمومی", IsActive = true, OrderIndex = 1,
+                        Category = AccountConstant.Cost, Title = "عمومی", IsActive = true, OrderIndex = 1,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.CostType, Title = "پذیرایی", IsActive = true, OrderIndex = 2,
+                        Category = AccountConstant.Cost, Title = "پذیرایی", IsActive = true, OrderIndex = 2,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.CostType, Title = "محرم و صفر", IsActive = true, OrderIndex = 3,
+                        Category = AccountConstant.Cost, Title = "محرم و صفر", IsActive = true, OrderIndex = 3,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.CostType, Title = "اعیاد", IsActive = true, OrderIndex = 4,
+                        Category = AccountConstant.Cost, Title = "اعیاد", IsActive = true, OrderIndex = 4,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.CostType, Title = "نیمه شعبان", IsActive = true, OrderIndex = 5,
+                        Category = AccountConstant.Cost, Title = "نیمه شعبان", IsActive = true, OrderIndex = 5,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.CostType, Title = "فاطمیه", IsActive = true, OrderIndex = 6,
+                        Category = AccountConstant.Cost, Title = "فاطمیه", IsActive = true, OrderIndex = 6,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                 };
@@ -348,27 +348,27 @@ public abstract class BaseInitializer
                 {
                     new()
                     {
-                        Category = AccountConstant.ItemType, Title = "شیرینی", IsActive = true, OrderIndex = 1,
+                        Category = AccountConstant.Reason, Title = "شیرینی", IsActive = true, OrderIndex = 1,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.ItemType, Title = "خرما", IsActive = true, OrderIndex = 2,
+                        Category = AccountConstant.Reason, Title = "خرما", IsActive = true, OrderIndex = 2,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.ItemType, Title = "سخنرانی", IsActive = true, OrderIndex = 3,
+                        Category = AccountConstant.Reason, Title = "سخنرانی", IsActive = true, OrderIndex = 3,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.ItemType, Title = "مداحی", IsActive = true, OrderIndex = 4,
+                        Category = AccountConstant.Reason, Title = "مداحی", IsActive = true, OrderIndex = 4,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.ItemType, Title = "متفرقه", IsActive = true, OrderIndex = 1000,
+                        Category = AccountConstant.Reason, Title = "متفرقه", IsActive = true, OrderIndex = 1000,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                 };
