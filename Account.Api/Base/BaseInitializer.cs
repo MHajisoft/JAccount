@@ -242,40 +242,35 @@ public abstract class BaseInitializer
 
                 await userManager.AddPasswordAsync(adminUser, "1qaz!QAZ");
 
-                var accountTypeList = new List<GeneralType>
+                var accountList = new List<GeneralType>
                 {
                     new()
                     {
-                        Category = AccountConstant.Account, Title = "نقدی", IsActive = true, OrderIndex = 1,
+                        Category = AccountConstant.Account, Title = "بانک ملت", IsActive = true, OrderIndex = 1,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.Account, Title = "حواله بانکی", IsActive = true, OrderIndex = 2,
+                        Category = AccountConstant.Account, Title = "بانک کارآفرین", IsActive = true, OrderIndex = 2,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.Account, Title = "کارت به کارت", IsActive = true, OrderIndex = 3,
+                        Category = AccountConstant.Account, Title = "وجه نقد", IsActive = true, OrderIndex = 3,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.Account, Title = "دستگاه پوز", IsActive = true, OrderIndex = 4,
-                        CreateUserId = 1, CreateDate = DateTime.Now
-                    },
-                    new()
-                    {
-                        Category = AccountConstant.Account, Title = "چک", IsActive = true, OrderIndex = 5,
+                        Category = AccountConstant.Account, Title = "چک", IsActive = true, OrderIndex = 4,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                 };
 
-                var costTypeList = new List<GeneralType>
+                var costList = new List<GeneralType>
                 {
                     new()
                     {
-                        Category = AccountConstant.Cost, Title = "عمومی", IsActive = true, OrderIndex = 1,
+                        Category = AccountConstant.Cost, Title = "جاری", IsActive = true, OrderIndex = 1,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
@@ -285,22 +280,17 @@ public abstract class BaseInitializer
                     },
                     new()
                     {
-                        Category = AccountConstant.Cost, Title = "محرم و صفر", IsActive = true, OrderIndex = 3,
+                        Category = AccountConstant.Cost, Title = "سخنرانی و مداحی", IsActive = true, OrderIndex = 3,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.Cost, Title = "اعیاد", IsActive = true, OrderIndex = 4,
+                        Category = AccountConstant.Cost, Title = "عزاداری", IsActive = true, OrderIndex = 4,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                     new()
                     {
-                        Category = AccountConstant.Cost, Title = "نیمه شعبان", IsActive = true, OrderIndex = 5,
-                        CreateUserId = 1, CreateDate = DateTime.Now
-                    },
-                    new()
-                    {
-                        Category = AccountConstant.Cost, Title = "فاطمیه", IsActive = true, OrderIndex = 6,
+                        Category = AccountConstant.Cost, Title = "اعیاد", IsActive = true, OrderIndex = 5,
                         CreateUserId = 1, CreateDate = DateTime.Now
                     },
                 };
@@ -344,7 +334,7 @@ public abstract class BaseInitializer
                     },
                 };
 
-                var itemTypeList = new List<GeneralType>
+                var reasonList = new List<GeneralType>
                 {
                     new()
                     {
@@ -373,21 +363,51 @@ public abstract class BaseInitializer
                     },
                 };
 
-                await dbContext.GeneralTypes.AddRangeAsync(accountTypeList);
-                await dbContext.GeneralTypes.AddRangeAsync(costTypeList);
+                var ingredientList = new List<GeneralType>
+                {
+                    new()
+                    {
+                        Category = AccountConstant.Ingredient, Title = "گوشت", IsActive = true, OrderIndex = 1,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.Ingredient, Title = "مرغ", IsActive = true, OrderIndex = 2,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.Ingredient, Title = "برنج", IsActive = true, OrderIndex = 3,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.Ingredient, Title = "زعفران", IsActive = true, OrderIndex = 4,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.Ingredient, Title = "سیب زمینی", IsActive = true, OrderIndex = 5,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                    new()
+                    {
+                        Category = AccountConstant.Ingredient, Title = "پیاز", IsActive = true, OrderIndex = 6,
+                        CreateUserId = 1, CreateDate = DateTime.Now
+                    },
+                };
+
+                await dbContext.GeneralTypes.AddRangeAsync(accountList);
+                await dbContext.GeneralTypes.AddRangeAsync(costList);
                 await dbContext.GeneralTypes.AddRangeAsync(relativeTypeList);
-                await dbContext.GeneralTypes.AddRangeAsync(itemTypeList);
+                await dbContext.GeneralTypes.AddRangeAsync(reasonList);
+                await dbContext.GeneralTypes.AddRangeAsync(ingredientList);
 
                 var personList = new List<Person>
                 {
                     new()
                     {
                         FirstName = "ناشناس", Gender = Gender.Male, CreateUserId = 1, IsAlive = true,
-                        CreateDate = DateTime.Now
-                    },
-                    new()
-                    {
-                        FirstName = "هزینه متفرقه", Gender = Gender.Male, CreateUserId = 1, IsAlive = true,
                         CreateDate = DateTime.Now
                     },
                 };

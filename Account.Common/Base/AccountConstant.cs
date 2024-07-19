@@ -14,4 +14,6 @@ public class AccountConstant
     public const string Cost = nameof(Cost);
 
     public const string Reason = nameof(Reason);
+    
+    public const string Ingredient = nameof(Ingredient);
 }
