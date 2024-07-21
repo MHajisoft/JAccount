@@ -1,14 +1,8 @@
 ﻿namespace Account.Api.Base;
 
-public class Message
+public class Message(MessageType messageType, string title)
 {
-    public Message(MessageType messageType, string title)
-    {
-        MessageType = messageType;
-        Title = title;
-    }
+    public MessageType MessageType { get; } = messageType;
 
-    public MessageType MessageType { get; }
-
-    public string Title { get; }
+    public string Title { get; } = title;
 }

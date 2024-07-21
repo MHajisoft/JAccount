@@ -3,9 +3,4 @@ using Account.Common.IService;
 
 namespace Account.Api.Controllers;
 
-public class CostController : GeneralTypeController
-{
-    public CostController(IGeneralTypeService service) : base(service, AccountConstant.Cost)
-    {
-    }
-}
+public class CostController(IGeneralTypeService service) : GeneralTypeController(service, AccountConstant.Cost);

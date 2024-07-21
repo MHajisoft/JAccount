@@ -5,12 +5,9 @@ using Account.Service.Base;
 
 namespace Account.Service.Services;
 
-public class GeneralTypeService : EntityService<GeneralType, GeneralTypeDto>, IGeneralTypeService
+public class GeneralTypeService(IServiceProvider appServiceProvider)
+    : EntityService<GeneralType, GeneralTypeDto>(appServiceProvider), IGeneralTypeService
 {
-    public GeneralTypeService(IServiceProvider appServiceProvider) : base(appServiceProvider)
-    {
-    }
-
     public override Task<GeneralTypeDto> Update(GeneralTypeDto entity)
     {
         throw new Exception("Category is required!");

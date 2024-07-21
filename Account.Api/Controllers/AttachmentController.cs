@@ -8,9 +8,4 @@ using Microsoft.AspNetCore.Authorization;
 namespace Account.Api.Controllers;
 
 [Authorize(Roles = nameof(AccountRoles.User))]
-public class AttachmentController : EntityController<Attachment, AttachmentDto>
-{
-    public AttachmentController(IAttachmentService service) : base(service)
-    {
-    }
-}
+public class AttachmentController(IAttachmentService service) : EntityController<Attachment, AttachmentDto>(service);

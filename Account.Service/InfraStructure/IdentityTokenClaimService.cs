@@ -9,21 +9,14 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Account.Service.InfraStructure;
 
-public class IdentityTokenClaimService : ITokenClaimsService
+public class IdentityTokenClaimService(UserManager<AppUser> userManager) : ITokenClaimsService
 {
-    private readonly UserManager<AppUser> _userManager;
-
-    public IdentityTokenClaimService(UserManager<AppUser> userManager)
-    {
-        _userManager = userManager;
-    }
-
     public async Task<string> GetTokenAsync(string userName)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(AccountConstant.JwtSecretKey);
-        var user = await _userManager.FindByNameAsync(userName);
-        var roles = await _userManager.GetRolesAsync(user);
+        var user = await userManager.FindByNameAsync(userName);
+        var roles = await userManager.GetRolesAsync(user);
         var claims = new List<Claim> { new (ClaimTypes.Name, userName) };
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
@@ -54,7 +47,7 @@ public class IdentityTokenClaimService : ITokenClaimsService
             var jwtToken = (JwtSecurityToken)validatedToken;
             var userName = jwtToken.Claims.First(x => x.Type == "unique_name").Value;
 
-            var user = await _userManager.FindByNameAsync(userName);
+            var user = await userManager.FindByNameAsync(userName);
 
             if (user == null)
                 return "";

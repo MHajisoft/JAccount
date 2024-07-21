@@ -6,18 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Account.Service.InfraStructure;
 
-public class RepositoryBase<T> : IRepository<T> where T : BaseEntity
+public class RepositoryBase<T>(AppDbContext dbContext) : IRepository<T>
+    where T : BaseEntity
 {
     #region Constructor
 
-    readonly DbContext _dbContext;
-    readonly DbSet<T> _dbSet;
-
-    public RepositoryBase(AppDbContext dbContext)
-    {
-        _dbContext = dbContext;
-        _dbSet = dbContext.Set<T>();
-    }
+    private readonly DbSet<T> _dbSet = dbContext.Set<T>();
 
     #endregion
 
@@ -127,7 +121,7 @@ public class RepositoryBase<T> : IRepository<T> where T : BaseEntity
 
     public async Task SaveChanges()
     {
-        await _dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 
     #endregion

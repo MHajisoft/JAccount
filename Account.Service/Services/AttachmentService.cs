@@ -5,9 +5,5 @@ using Account.Service.Base;
 
 namespace Account.Service.Services;
 
-public class AttachmentService : EntityService<Attachment, AttachmentDto>, IAttachmentService
-{
-    public AttachmentService(IServiceProvider appServiceProvider) : base(appServiceProvider)
-    {
-    }
-}
+public class AttachmentService(IServiceProvider appServiceProvider)
+    : EntityService<Attachment, AttachmentDto>(appServiceProvider), IAttachmentService;

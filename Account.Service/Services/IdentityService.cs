@@ -3,17 +3,8 @@ using Account.Service.Base;
 
 namespace Account.Service.Services;
 
-public class IdentityService : IIdentityService
+public class IdentityService(AppUserManager userManager, AppSigninManager signinManager) : IIdentityService
 {
-    private readonly AppUserManager _userManager;
-    private readonly AppSigninManager _signinManager;
-    
-    public IdentityService(AppUserManager userManager, AppSigninManager signinManager)
-    {
-        _userManager = userManager;
-        _signinManager = signinManager;
-    }
-    
     public Task AddUser(string username)
     {
         throw new NotImplementedException();

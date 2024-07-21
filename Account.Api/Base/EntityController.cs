@@ -5,14 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Account.Api.Base;
 
-public abstract class EntityController<TEntity, TDto> : BaseController where TEntity : BaseEntity, new() where TDto : BaseDto
+public abstract class EntityController<TEntity, TDto>(IEntityService<TEntity, TDto> service) : BaseController
+    where TEntity : BaseEntity, new()
+    where TDto : BaseDto
 {
-    protected readonly IEntityService<TEntity, TDto> Service;
-
-    public EntityController(IEntityService<TEntity, TDto> service)
-    {
-        Service = service;
-    }
+    protected readonly IEntityService<TEntity, TDto> Service = service;
 
     [HttpGet]
     public virtual async Task<List<TDto>> GetAll()

@@ -8,12 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Account.Service.Services;
 
-public class PersonService : EntityService<Person, PersonDto>, IPersonService
+public class PersonService(IServiceProvider appServiceProvider)
+    : EntityService<Person, PersonDto>(appServiceProvider), IPersonService
 {
-    public PersonService(IServiceProvider appServiceProvider) : base(appServiceProvider)
-    {
-    }
-
     public override async Task<PersonDto> Update(PersonDto dto)
     {
         if (dto.NationalCode is not null && !ValidationUtil.IsValidNationalCode(dto.NationalCode))

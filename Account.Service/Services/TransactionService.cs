@@ -7,13 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Account.Service.Services;
 
-public class TransactionService : EntityService<Transaction, TransactionDto>, ITransactionService
+public class TransactionService(IServiceProvider appServiceProvider)
+    : EntityService<Transaction, TransactionDto>(appServiceProvider), ITransactionService
 {
-    public TransactionService(IServiceProvider appServiceProvider) : base(appServiceProvider)
-    {
-    }
-
-    public async Task<TransactionDto> Update(TransactionDto dto)
+    public override async Task<TransactionDto> Update(TransactionDto dto)
     {
         var generalTypeRepository = AppServiceProvider.GetRequiredService<IRepository<GeneralType>>();
         var personRepository = AppServiceProvider.GetRequiredService<IRepository<Person>>();

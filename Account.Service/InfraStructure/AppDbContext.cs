@@ -7,19 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Account.Service.InfraStructure;
 
-public class AppDbContext : IdentityDbContext<AppUser, AppRole, long>
+public class AppDbContext(DbContextOptions<AppDbContext> options, IHttpContextAccessor httpContextAccessor)
+    : IdentityDbContext<AppUser, AppRole, long>(options)
 {
-    #region Constructor
-
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
-    public AppDbContext(DbContextOptions<AppDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
-    {
-        _httpContextAccessor = httpContextAccessor;
-    }
-
-    #endregion
-
     #region Tables
 
     public DbSet<Person> Persons { get; set; }
@@ -51,7 +41,7 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, long>
     public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
         var date = DateTime.Now;
-        var userId = await GetUserId(_httpContextAccessor);
+        var userId = await GetUserId(httpContextAccessor);
 
         #region Create Data
 

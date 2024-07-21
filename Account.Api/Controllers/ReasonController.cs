@@ -3,9 +3,4 @@ using Account.Common.IService;
 
 namespace Account.Api.Controllers;
 
-public class ReasonController : GeneralTypeController
-{
-    public ReasonController(IGeneralTypeService service) : base(service, AccountConstant.Reason)
-    {
-    }
-}
+public class ReasonController(IGeneralTypeService service) : GeneralTypeController(service, AccountConstant.Reason);

@@ -40,18 +40,11 @@ public static class PredicateBuilder
         return new ParameterRewriter(parameter).Transform(expression);
     }
 
-    private class ParameterRewriter : ExpressionTransformer
+    private class ParameterRewriter(ParameterExpression parameter) : ExpressionTransformer
     {
-        private readonly ParameterExpression _parameter;
-
-        public ParameterRewriter(ParameterExpression parameter)
-        {
-            _parameter = parameter;
-        }
-
         public Expression VisitParameter(ParameterExpression expression)
         {
-            return _parameter;
+            return parameter;
         }
     }
 }

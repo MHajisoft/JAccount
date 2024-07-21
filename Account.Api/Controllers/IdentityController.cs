@@ -10,30 +10,22 @@ using Serilog;
 
 namespace Account.Api.Controllers;
 
-public class IdentityController : BaseController
+public class IdentityController(
+    AppUserManager userManager,
+    AppSigninManager signInManager,
+    ITokenClaimsService tokenClaimsService,
+    IHttpContextAccessor httpContextAccessor)
+    : BaseController
 {
-    private readonly AppUserManager _userManager;
-    private readonly AppSigninManager _signInManager;
-    private readonly ITokenClaimsService _tokenClaimsService;
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
-    public IdentityController(AppUserManager userManager, AppSigninManager signInManager, ITokenClaimsService tokenClaimsService, IHttpContextAccessor httpContextAccessor)
-    {
-        _userManager = userManager;
-        _signInManager = signInManager;
-        _tokenClaimsService = tokenClaimsService;
-        _httpContextAccessor = httpContextAccessor;
-    }
-
     [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] LoginDto dto)
     {
-        var user = await _userManager.FindByNameAsync(dto.Username);
+        var user = await userManager.FindByNameAsync(dto.Username);
         if (user == null)
             return ResponseResult.AddError(MembershipResource.Error_UsernameOrPasswordIsNotValid);
 
-        var result = await _signInManager.PasswordSignInAsync(dto.Username, dto.Password, false, true);
+        var result = await signInManager.PasswordSignInAsync(dto.Username, dto.Password, false, true);
 
         //ToDo پیاده سازی دو مرحله ای
         // if (result.RequiresTwoFactor)
@@ -53,7 +45,7 @@ public class IdentityController : BaseController
 
         return ResponseResult.SetData(new
         {
-            token = await _tokenClaimsService.GetTokenAsync(dto.Username),
+            token = await tokenClaimsService.GetTokenAsync(dto.Username),
             user.UserName,
             user.DisplayName
         });
@@ -63,11 +55,11 @@ public class IdentityController : BaseController
     [Authorize(Roles = nameof(AccountRoles.User))]
     public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
     {
-        if (_httpContextAccessor.HttpContext?.User.Identity?.Name != dto.Username)
-           return ResponseResult.AddError(MembershipResource.Error_CurrentUserMismatch);
-        
-        var user = await _userManager.FindByNameAsync(dto.Username);
-        var result = await _userManager.ChangePasswordAsync(user!, dto.OldPassword, dto.NewPassword);
+        if (httpContextAccessor.HttpContext?.User.Identity?.Name != dto.Username)
+            return ResponseResult.AddError(MembershipResource.Error_CurrentUserMismatch);
+
+        var user = await userManager.FindByNameAsync(dto.Username);
+        var result = await userManager.ChangePasswordAsync(user!, dto.OldPassword, dto.NewPassword);
         if (result.Succeeded)
             return ResponseResult.AddSuccess();
 
@@ -81,8 +73,8 @@ public class IdentityController : BaseController
     [Authorize(Roles = nameof(AccountRoles.Admin))]
     public async Task<IActionResult> SetPassword([FromBody] ChangePasswordDto dto)
     {
-        var user = await _userManager.FindByNameAsync(dto.Username);
-        var result = await _userManager.ChangePasswordAsync(user!, dto.OldPassword, dto.NewPassword);
+        var user = await userManager.FindByNameAsync(dto.Username);
+        var result = await userManager.ChangePasswordAsync(user!, dto.OldPassword, dto.NewPassword);
         //ToDo این مورد باید پیاده سازی شود
         //var result = await _userManager.ResetPasswordAsync(user!, dto.OldPassword, dto.NewPassword);
         if (result.Succeeded)
