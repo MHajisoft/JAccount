@@ -220,6 +220,7 @@ public abstract class BaseInitializer
         try
         {
             var dbContext = scopedProvider.GetRequiredService<T>();
+            await dbContext.Database.EnsureCreatedAsync();
             await dbContext.Database.MigrateAsync();
 
             var userManager = scopedProvider.GetRequiredService<AppUserManager>();
