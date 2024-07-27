@@ -5,7 +5,7 @@ namespace Account.Common.Entity;
 public class Transaction : BaseEntity
 {
     public Person? Person { get; set; }
-    public long PersonId { get; set; }
+    public long? PersonId { get; set; }
 
     public GeneralType? Account { get; set; } // حساب: ملت ، مهر، نقدی، چک
     public long AccountId { get; set; }
