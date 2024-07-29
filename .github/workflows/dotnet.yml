@@ -21,9 +21,11 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run:  cd api
-            dotnet restore
+      working-directory: ./api
+      run:  dotnet restore
     - name: Build
+      working-directory: ./api
       run: dotnet build --no-restore
     - name: Test
+      working-directory: ./api
       run: dotnet test --no-build --verbosity normal
