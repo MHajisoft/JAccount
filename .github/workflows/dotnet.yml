@@ -21,7 +21,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run:  cd app 
+      run:  cd api
             dotnet restore
     - name: Build
       run: dotnet build --no-restore
